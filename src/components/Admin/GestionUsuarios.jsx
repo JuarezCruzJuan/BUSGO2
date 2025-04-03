@@ -17,9 +17,15 @@ const GestionUsuarios = () => {
   const [filtroRol, setFiltroRol] = useState('todos');
 
   // Move fetchUsuarios before useEffect
+  // Update the fetchUsuarios function
   const fetchUsuarios = async () => {
     try {
-      const response = await api.get('/usuarios');
+      const token = localStorage.getItem('token');
+      const response = await api.get('/api/usuarios', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       setUsuarios(response.data);
     } catch (error) {
       setSnackbar({
@@ -49,10 +55,16 @@ const GestionUsuarios = () => {
     return Object.keys(nuevosErrores).length === 0;
   };
 
+  // Update agregarUsuario function
   const agregarUsuario = async () => {
     if (!validarUsuario(nuevoUsuario)) return;
     try {
-      const response = await api.post('/usuarios', nuevoUsuario);
+      const token = localStorage.getItem('token');
+      const response = await api.post('/api/usuarios', nuevoUsuario, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       setUsuarios([...usuarios, response.data]);
       setNuevoUsuario({ nombre: '', email: '', password: '', rol: '' });
       setSnackbar({ open: true, message: 'Usuario agregado correctamente', severity: 'success' });
@@ -65,10 +77,16 @@ const GestionUsuarios = () => {
     }
   };
 
+  // Update actualizarUsuario function
   const actualizarUsuario = async (id, datosActualizados) => {
     if (!validarUsuario(datosActualizados)) return;
     try {
-      const response = await api.put(`/usuarios/${id}`, datosActualizados);
+      const token = localStorage.getItem('token');
+      const response = await api.put(`/api/usuarios/${id}`, datosActualizados, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       setUsuarios(usuarios.map(usuario => 
         usuario._id === id ? response.data : usuario
       ));
@@ -87,9 +105,15 @@ const GestionUsuarios = () => {
     }
   };
 
+  // Update eliminarUsuario function
   const eliminarUsuario = async (id) => {
     try {
-      await api.delete(`/usuarios/${id}`);
+      const token = localStorage.getItem('token');
+      await api.delete(`/api/usuarios/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       setUsuarios(usuarios.filter(usuario => usuario._id !== id));
       setSnackbar({ open: true, message: 'Usuario eliminado correctamente', severity: 'success' });
     } catch (error) {
