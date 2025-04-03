@@ -1,0 +1,216 @@
+.admin-container {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(120deg, #f6f7f9 0%, #e3e7ed 100%);
+}
+
+.back-button {
+  background: linear-gradient(45deg, #2196f3, #1976d2) !important;
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.back-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(33, 150, 243, 0.4) !important;
+}
+
+.paper-style {
+  background: white;
+  border-radius: 16px !important;
+  padding: 2rem !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
+}
+
+.text-field {
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.text-field input {
+  padding: 12px !important;
+}
+
+.text-field.error {
+  background: #fff5f5;
+}
+
+.form-section-title {
+  color: #1565c0;
+  font-weight: 600 !important;
+  margin-bottom: 1.5rem !important;
+  position: relative;
+}
+
+.form-section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #2196f3, #64b5f6);
+  border-radius: 2px;
+}
+
+.button-primary {
+  background: linear-gradient(45deg, #2196f3, #1976d2) !important;
+  padding: 10px 24px !important;
+  border-radius: 8px !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+}
+
+.button-primary:hover {
+  background: linear-gradient(45deg, #1976d2, #1565c0) !important;
+}
+
+/* Lista de camiones */
+.MuiListItem-root {
+  background: #ffffff;
+  border-radius: 12px !important;
+  margin-bottom: 12px !important;
+  padding: 16px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.MuiListItem-root:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.MuiListItemText-primary {
+  font-weight: 600 !important;
+  color: #1976d2 !important;
+}
+
+.MuiListItemText-secondary {
+  color: #64748b !important;
+}
+
+.icon-button {
+  color: #64748b !important;
+  padding: 8px !important;
+  margin-left: 8px !important;
+  transition: all 0.2s ease !important;
+}
+
+.icon-button:hover {
+  background-color: #f1f5f9 !important;
+  color: #1976d2 !important;
+}
+
+/* Paginación */
+.pagination {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.MuiPagination-ul {
+  background: white;
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Diálogos */
+.MuiDialog-paper {
+  border-radius: 16px !important;
+  padding: 16px !important;
+}
+
+.MuiDialogTitle-root {
+  background: linear-gradient(45deg, #2196f3, #1976d2);
+  color: white !important;
+  border-radius: 8px;
+  margin: -16px -16px 16px -16px !important;
+  padding: 16px 24px !important;
+}
+
+.MuiDialogContent-root {
+  padding: 24px !important;
+}
+
+.MuiDialogActions-root {
+  padding: 16px !important;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Snackbar personalizado */
+.MuiAlert-root {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+.MuiAlert-standardSuccess {
+  background: linear-gradient(45deg, #4caf50, #43a047) !important;
+  color: white !important;
+}
+
+.MuiAlert-standardError {
+  background: linear-gradient(45deg, #f44336, #e53935) !important;
+  color: white !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .admin-container {
+    padding: 1rem;
+  }
+
+  .paper-style {
+    padding: 1rem !important;
+  }
+
+  .MuiListItem-root {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .MuiListItemText-root {
+    margin-bottom: 12px;
+  }
+
+  .icon-button-container {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+}
+
+/* Select customization */
+.MuiSelect-select {
+  padding: 12px !important;
+  background: #f8f9fa !important;
+  border-radius: 8px !important;
+}
+
+.MuiSelect-icon {
+  color: #64748b !important;
+}
+
+/* Form Controls */
+.MuiFormControl-root {
+  width: 100%;
+}
+
+.MuiInputLabel-root {
+  color: #64748b !important;
+}
+
+.MuiInputLabel-root.Mui-focused {
+  color: #1976d2 !important;
+}
+
+/* Grid spacing */
+.MuiGrid-root {
+  margin-top: 0 !important;
+}
+
+.MuiGrid-item {
+  padding-top: 16px !important;
+}

@@ -1,0 +1,214 @@
+.admin-container {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+}
+
+.back-button {
+  background: linear-gradient(45deg, #3498db, #2980b9) !important;
+  color: white !important;
+  padding: 10px 24px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.back-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4) !important;
+}
+
+.paper-style {
+  background: white;
+  border-radius: 16px !important;
+  padding: 2rem !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.MuiTabs-root {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 8px;
+  margin-bottom: 24px !important;
+}
+
+.MuiTab-root {
+  border-radius: 8px !important;
+  min-height: 48px !important;
+  transition: all 0.3s ease !important;
+}
+
+.MuiTab-root.Mui-selected {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-section-title {
+  color: #2c3e50;
+  font-size: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #3498db;
+}
+
+.MuiListItem-root {
+  background: #f8f9fa;
+  border-radius: 12px !important;
+  margin-bottom: 12px !important;
+  padding: 16px !important;
+  transition: all 0.3s ease;
+}
+
+.MuiListItem-root:hover {
+  transform: translateX(5px);
+  background: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.MuiListItemText-primary {
+  color: #2c3e50 !important;
+  font-weight: 600 !important;
+  font-size: 1.1rem !important;
+}
+
+.MuiListItemText-secondary {
+  color: #7f8c8d !important;
+}
+
+.icon-button {
+  background: #ecf0f1 !important;
+  color: #3498db !important;
+  transition: all 0.3s ease !important;
+}
+
+.icon-button:hover {
+  background: #3498db !important;
+  color: white !important;
+  transform: rotate(90deg);
+}
+
+.MuiDialog-paper {
+  border-radius: 16px !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2) !important;
+}
+
+.MuiDialogTitle-root {
+  background: linear-gradient(45deg, #3498db, #2980b9);
+  color: white !important;
+  padding: 20px 24px !important;
+}
+
+.MuiDialogContent-root {
+  padding: 24px !important;
+}
+
+.MuiTextField-root {
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.MuiSelect-root {
+  background: #f8f9fa !important;
+  border-radius: 8px !important;
+}
+
+.MuiPagination-root {
+  margin-top: 2rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.MuiPaginationItem-root {
+  background: #f8f9fa !important;
+  border: none !important;
+  margin: 0 4px !important;
+  transition: all 0.3s ease !important;
+}
+
+.MuiPaginationItem-root.Mui-selected {
+  background: #3498db !important;
+  color: white !important;
+}
+
+.MuiAlert-root {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.MuiAlert-standardSuccess {
+  background: linear-gradient(45deg, #2ecc71, #27ae60) !important;
+  color: white !important;
+}
+
+.MuiAlert-standardError {
+  background: linear-gradient(45deg, #e74c3c, #c0392b) !important;
+  color: white !important;
+}
+
+/* Form Controls */
+.MuiFormControl-root {
+  margin-bottom: 16px !important;
+}
+
+.MuiInputLabel-root {
+  color: #7f8c8d !important;
+}
+
+.MuiInputLabel-root.Mui-focused {
+  color: #3498db !important;
+}
+
+.MuiOutlinedInput-root {
+  border-radius: 8px !important;
+}
+
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #3498db !important;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .admin-container {
+    padding: 1rem;
+  }
+
+  .paper-style {
+    padding: 1rem !important;
+  }
+
+  .MuiListItem-root {
+    flex-direction: column;
+  }
+
+  .MuiListItemText-root {
+    margin-bottom: 1rem;
+  }
+
+  .icon-button {
+    align-self: flex-end;
+  }
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: #7f8c8d;
+}
+
+/* Dialog Actions */
+.MuiDialogActions-root {
+  padding: 16px 24px !important;
+  background: #f8f9fa;
+  border-top: 1px solid #ecf0f1;
+}
+
+.MuiButton-containedPrimary {
+  background: linear-gradient(45deg, #3498db, #2980b9) !important;
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3) !important;
+}
+
+.MuiButton-containedPrimary:hover {
+  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4) !important;
+}
