@@ -32,7 +32,9 @@ const DashboardPasajero = () => {
   ]);
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
-
+  // Agregar estado para seguir el flujo de la conversación
+  const [chatState, setChatState] = useState('inicio');
+  
   // Add EmailJS initialization
   useEffect(() => {
     // Initialize EmailJS
@@ -172,34 +174,98 @@ const DashboardPasajero = () => {
       try {
         let botResponse = "";
         
-        // Update incident details based on user input
-        if (newMessage.toLowerCase().includes('bus') || newMessage.toLowerCase().includes('camión')) {
-          setIncidentDetails(prev => ({...prev, tipo: 'Problema con Bus'}));
-        } else if (newMessage.toLowerCase().includes('conductor')) {
-          setIncidentDetails(prev => ({...prev, tipo: 'Problema con Conductor'}));
-        } else if (newMessage.toLowerCase().includes('horario')) {
-          setIncidentDetails(prev => ({...prev, tipo: 'Problema de Horario'}));
-        }
-
-        if (newMessage.toLowerCase().match(/placa[:\s]*([\w\d-]+)/i)) {
-          const match = newMessage.toLowerCase().match(/placa[:\s]*([\w\d-]+)/i);
-          const placa = match[1];
-          setIncidentDetails(prev => ({...prev, placa: placa}));
-        }
-
-        if (newMessage.length > 20) {
-          setIncidentDetails(prev => ({
-            ...prev, 
-            descripcion: newMessage,
-            fecha: new Date().toISOString()
-          }));
-
-          // Send email with incident report
-          const emailSent = await sendIncidentEmail(incidentDetails);
-          
-          botResponse = emailSent 
-            ? "Tu reporte de incidencia ha sido registrado y enviado por correo electrónico. Un administrador lo revisará pronto."
-            : "Se registró tu incidencia, pero hubo un problema al enviar el correo. Un administrador revisará tu caso.";
+        // Lógica basada en el estado actual de la conversación
+        switch(chatState) {
+          case 'inicio':
+            if (newMessage.toLowerCase().includes('incidencia') || 
+                newMessage.toLowerCase().includes('problema') || 
+                newMessage.toLowerCase().includes('reportar')) {
+              botResponse = "Por favor, indícame qué tipo de incidencia quieres reportar: ¿Problema con Bus, Problema con Conductor o Problema de Horario?";
+              setChatState('esperando_tipo');
+            } else {
+              botResponse = "Puedo ayudarte a reportar incidencias con los buses. ¿Qué tipo de problema quieres reportar?";
+            }
+            break;
+            
+          case 'esperando_tipo':
+            if (newMessage.toLowerCase().includes('bus')) {
+              setIncidentDetails(prev => ({...prev, tipo: 'Problema con Bus'}));
+              botResponse = "Entendido. ¿Podrías indicarme la placa del bus? (Formato: ABC-123)";
+              setChatState('esperando_placa');
+            } else if (newMessage.toLowerCase().includes('conductor')) {
+              setIncidentDetails(prev => ({...prev, tipo: 'Problema con Conductor'}));
+              botResponse = "Entendido. ¿Podrías indicarme la placa del bus del conductor? (Formato: ABC-123)";
+              setChatState('esperando_placa');
+            } else if (newMessage.toLowerCase().includes('horario')) {
+              setIncidentDetails(prev => ({...prev, tipo: 'Problema de Horario'}));
+              botResponse = "Entendido. ¿Podrías indicarme la placa del bus con el problema de horario? (Formato: ABC-123)";
+              setChatState('esperando_placa');
+            } else {
+              botResponse = "No he entendido el tipo de incidencia. Por favor, especifica si es un Problema con Bus, Problema con Conductor o Problema de Horario.";
+            }
+            break;
+            
+          case 'esperando_placa':
+            // Verificar si el mensaje contiene una placa (formato simple)
+            const placaRegex = /([A-Za-z0-9]{3,7}[-]?[0-9]{2,3})/;
+            const placaMatch = newMessage.match(placaRegex);
+            
+            if (placaMatch) {
+              setIncidentDetails(prev => ({...prev, placa: placaMatch[0]}));
+              botResponse = "Gracias. Ahora, por favor describe detalladamente la incidencia que quieres reportar.";
+              setChatState('esperando_descripcion');
+            } else {
+              botResponse = "No he podido identificar la placa. Por favor, ingresa la placa del bus en formato ABC-123.";
+            }
+            break;
+            
+          case 'esperando_descripcion':
+            if (newMessage.length > 10) {
+              setIncidentDetails(prev => ({
+                ...prev, 
+                descripcion: newMessage,
+                fecha: new Date().toISOString()
+              }));
+              
+              botResponse = "Gracias por la información. Estoy preparando tu reporte. ¿Deseas enviarlo ahora? (Sí/No)";
+              setChatState('confirmacion');
+            } else {
+              botResponse = "Por favor, proporciona una descripción más detallada de la incidencia.";
+            }
+            break;
+            
+          case 'confirmacion':
+            if (newMessage.toLowerCase().includes('si') || 
+                newMessage.toLowerCase().includes('sí') || 
+                newMessage.toLowerCase().includes('enviar')) {
+              
+              botResponse = "Enviando tu reporte...";
+              setMessages(prev => [...prev, { text: botResponse, sender: "bot" }]);
+              
+              // Enviar el email con la incidencia
+              const emailSent = await sendIncidentEmail(incidentDetails);
+              
+              botResponse = emailSent 
+                ? "✅ Tu reporte de incidencia ha sido registrado y enviado por correo electrónico. Un administrador lo revisará pronto. ¿Hay algo más en lo que pueda ayudarte?"
+                : "❌ Hubo un problema al enviar el correo. Por favor, intenta nuevamente más tarde.";
+              
+              // Reiniciar el estado para una nueva conversación
+              setChatState('inicio');
+              setIncidentDetails({
+                tipo: 'General',
+                placa: '',
+                descripcion: '',
+                fecha: new Date().toISOString()
+              });
+            } else {
+              botResponse = "He cancelado el envío del reporte. ¿Deseas modificar algún dato?";
+              setChatState('inicio');
+            }
+            break;
+            
+          default:
+            botResponse = "Lo siento, no entendí. ¿Puedes ser más específico?";
+            setChatState('inicio');
         }
 
         setMessages(prev => [...prev, { text: botResponse, sender: "bot" }]);
@@ -209,6 +275,7 @@ const DashboardPasajero = () => {
           text: "Lo siento, tuve un problema al procesar tu reporte. Por favor, intenta de nuevo.", 
           sender: "bot" 
         }]);
+        setChatState('inicio');
       }
     }, 1000);
   };
